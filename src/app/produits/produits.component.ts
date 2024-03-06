@@ -33,6 +33,7 @@ export class ProduitsComponent implements OnInit {
   produits: Produit[] = [];
   produitCourant: Produit = new Produit();
   message: string = '';
+  afficherFormulaireEdition: boolean = false; // Variable pour contrôler l'affichage du formulaire de modification
 
   validerFormulaire(form: NgForm) {
     if (form.valid) {
@@ -55,7 +56,7 @@ export class ProduitsComponent implements OnInit {
           if (index !== -1) {
             this.produits[index] = updatedProduct;
             this.message = 'Le produit a été mis à jour avec succès.';
-            this.cacherFormulaire(); // Cacher le formulaire après validation
+            this.afficherFormulaireEdition = false; // Cacher le formulaire après validation
           }
         },
         error: (err) => {
@@ -95,9 +96,11 @@ export class ProduitsComponent implements OnInit {
 
   editerProduit(produit: Produit) {
     this.produitCourant = { ...produit };
+    this.afficherFormulaireEdition = true; // Afficher le formulaire lors de l'édition d'un produit
   }
 
   cacherFormulaire() {
     this.produitCourant = new Produit(); // Réinitialiser le produit courant
+    this.afficherFormulaireEdition = false; // Cacher le formulaire
   }
 }
